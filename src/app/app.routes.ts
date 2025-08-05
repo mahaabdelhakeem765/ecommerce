@@ -3,6 +3,7 @@ import { loggedGuard } from './core/guards/logged/logged.guard';
 import { AuthComponent } from './layouts/auth/auth.component';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { Routes } from '@angular/router';
+import { NotfoundComponent } from './pages/notfound/notfound.component';
 
 
 export const routes: Routes = [
@@ -23,7 +24,8 @@ export const routes: Routes = [
         {path: 'allorders' , loadComponent: ()=>import('./pages/allorders/allorders.component').then( (c)=>c.AllordersComponent ) , title: 'Alloeders!'},
         {path: 'wishlist' , loadComponent: ()=>import('./pages/wishlist/wishlist.component').then( (c)=>c.WishlistComponent ), title: 'Wishlist !'},
         {path: 'search-products/:id' , loadComponent: ()=>import('./pages/search-products/search-products.component').then( (c)=>c.SearchProductsComponent ), title: 'Search Product !'},
-        {path : '**' , loadComponent: ()=>import('./pages/notfound/notfound.component').then( (c)=>c.NotfoundComponent ) , title: 'Notfound !'}
+        // {path : '**' , loadComponent: ()=>import('./pages/notfound/notfound.component').then( (c)=>c.NotfoundComponent ) , title: 'Notfound !'}
+        {path: '**' , component:NotfoundComponent , title: 'Notfound !'}
     ]}
     
     
