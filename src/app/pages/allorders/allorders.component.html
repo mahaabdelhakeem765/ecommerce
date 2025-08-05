@@ -1,0 +1,93 @@
+<app-header backgroundImage="/images/shop-category.jpg" >
+    <p class="text-xl font-medium uppercase">All Orders</p>
+</app-header>
+<section id="orders" class="lg:xl-10/12 xl:w-9/12 mx-auto min-h-96">
+  <div class="container mx-auto py-12 px-6 md:px-12">
+    @if(orders()){
+      @for (order of orders(); track order._id;  let i = $index) {
+          <div class="border border-gray-300 mb-5">
+            <div class="bg-gray-100 p-3">
+              <div class="flex flex-col lg:flex-row justify-between items-center">
+                
+                  <div>
+                      <div class="flex gap-x-3 items-center">
+                    <h3 class="font-semibold text-gray-700">Order: {{i + 1}}</h3>
+                    @if (order.isDelivered === true) {
+  
+                      <span class="px-2 py-1 rounded-full text-sm font-medium text-[#31708f] bg-[#d9edf7]">
+                      Delivered
+                      </span>
+                    }@else {
+                      <span class="px-2 py-1 rounded-full text-sm font-medium text-[#31708f] bg-[#d9edf7]">
+                          Pending
+                      </span>
+                    }
+                  </div>
+                  </div>
+                  <h4 class="text-md font-medium text-gray-800">Placed on: <span class="font-normal">{{order.createdAt | date}}</span></h4>
+                
+              </div>
+            </div>
+      
+            <div class="flex flex-col lg:flex-row justify-between gap-3 p-4">
+              
+              <div class="flex gap-x-3 border-r border-gray-300 pr-5 flex-wrap">
+                @for (prod of order.cartItems; track $index) {
+                  <div class="relative rounded-md">
+                      <img
+                      [src]="prod.product.imageCover"
+                      class="w-12 h-12 min-w-[50px] min-h-[50px] object-cover rounded-lg border border-gray-200 p-1"
+                      alt="Product" />
+                      <div class="absolute top-0 right-0 w-5 h-5 text-white bg-black/75 text-xs rounded-tr-md rounded-bl-md flex justify-center items-center">
+                      {{prod.count}}
+                      </div>
+                  </div>
+                }
+              </div>
+              <div class="flex items-baseline gap-x-3 lg:flex-col">
+                <h3 class="text-md font-medium text-gray-800">Items: </h3>
+                <span class="text-sm font-normal text-gray-700">{{order.cartItems.length}} items</span>
+              </div>
+              <div class="flex items-baseline gap-x-3 lg:flex-col">
+                <h3 class="text-md font-medium text-gray-800">Quantity</h3>
+                <span class="text-sm font-normal text-gray-700 self-center">{{ getTotalQuantity(order) }}</span>
+              </div>
+              <div class="flex items-baseline gap-x-3 lg:flex-col">
+                <h3 class="text-md font-medium text-gray-800">Total Price</h3>
+                <span class="text-sm font-normal text-gray-700">{{order.totalOrderPrice}} EGP</span>
+              </div>
+              <div class="flex items-baseline gap-x-3 lg:flex-col">
+                <h3 class="text-md font-medium text-gray-800">City</h3>
+                <span class="text-sm font-normal text-gray-700">{{order.shippingAddress.city}}</span>
+              </div>
+      
+              <div class="flex flex-col border-l border-gray-300 pl-5 space-y-3">
+                <div class="flex items-baseline gap-x-3 lg:flex-col">
+                <h3 class="text-md font-medium text-gray-800">Payment</h3>
+                <span class="text-sm font-normal text-[#56cfe1]">
+                  {{order.paymentMethodType}}
+                  @if (order.isPaid) {
+                      <span class="px-1 py-0.5 ms-1 bg-green-100 text-green-600 rounded-full text-xs ">
+                          Paid
+                      </span>
+                  }
+              </span>
+              </div>
+              </div>
+            </div>
+          </div>
+      }
+    }@else{
+      <!-- allorders empty -->
+        <div class="flex flex-col justify-center min-h-[35vh]">
+          <div class="px-12 py-8 text-md text-center text-[#31708f] bg-[#d9edf7]" role="alert">
+              <span class="font-medium">No orders found.</span>
+          </div>
+            <button routerLink="/products" type="button" class="text-gray-900 bg-white border-2 border-gray-900 focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition font-semibold rounded-full text-sm px-7 py-2 mt-5 mx-auto block cursor-pointer">Return to shop</button>
+        </div>
+
+        }
+    
+
+  </div>
+</section>

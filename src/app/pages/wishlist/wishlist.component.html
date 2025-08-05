@@ -1,0 +1,68 @@
+@if(wishListArray()){
+  <app-header backgroundImage="/images/shop-category.jpg" >
+        <p class="text-xl font-medium uppercase">Wishlist</p>
+        <p>View your wishlist products</p>
+    </app-header>
+
+  <section id="cart" class="lg:xl-10/12 xl:w-9/12 mx-auto min-h-[35vh] md:min-h-[45vh]">
+    <div class="container mx-auto py-12 px-6 md:px-12">
+  
+      @if(wishListArray().length>0){
+        <div class="relative overflow-x-auto">
+          <table class="w-full text-sm text-left rtl:text-right text-gray-500 border border-[#ddd]">
+            <thead class="text-ms text-gray-700 capitalize bg-gray-100 border-b border-[#ddd]">
+              <tr>
+                <th scope="col" class="px-6 py-3"></th>
+                <th scope="col" class="px-6 py-3"></th>
+                <th scope="col" class="px-6 py-3">product</th>
+                <th scope="col" class="px-6 py-3 whitespace-nowrap">unit Pice</th>
+                <th scope="col" class="px-6 py-3 whitespace-nowrap">Stock status</th>
+                <th scope="col" class="px-6 py-3"></th>
+              </tr>
+            </thead>
+            <tbody>
+                @for (wishlist of wishListArray(); track wishlist._id) {
+                    <tr class="bg-white border-b border-gray-200">
+                      <td class="px-6 py-4 w-[30px] min-w-[30px]">
+                        <a (click)="deleteProductFromWishlist(wishlist._id)" [style]="{ cursor: deletingProductId() === wishlist._id ? 'wait' : 'pointer' }">
+                          <i class="fa-solid fa-xmark text-black/75 text-xl text-center hover:text-[#56cfe1] transition-[0.5s]"></i>
+                        </a>
+                      </td>
+                      <td class="px-6 py-4 w-[100px] min-w-[100px]">
+                        <img [src]="wishlist.imageCover" class="w-100" alt="Product Title" />
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-gray-800">
+                          {{wishlist.title.split(' ' , 3).join(' ')}}.....
+                      </td>
+                      <td class="px-6 py-4">{{wishlist.price}} EGP</td>
+                       <td class="px-6 py-4" [class]="wishlist.quantity > 0 ? 'text-green-700' : 'text-red-600'">
+                            {{ wishlist.quantity > 0 ? 'In Stock' : 'Out of Stock' }}
+                        </td>
+                      <td class="px-6 py-4 w-[150px] min-w-[150px]">
+                          <a (click)="addProductToCart(wishlist._id)" [style.cursor]="loadingAddProductId() === wishlist._id ? 'wait' : 'pointer'" class="text-black/75 hover:text-[#56cfe1] transition">
+                              <i class="fa-solid fa-cart-shopping"></i>
+                              <span class="ms-1">add to cart</span>
+                          </a>
+                      </td>
+                    </tr>
+                }
+    
+             
+            </tbody>
+          </table>
+        </div>
+      }@else {
+        <!-- wishlist empty -->
+         <div class="flex flex-col justify-center min-h-[30vh]">
+            <!-- insert alert div and button here -->
+            <div class="px-12 py-8 text-md text-center text-[#31708f] bg-[#d9edf7]" role="alert">
+                <span class="font-medium">Your wishlist is currently empty.</span>
+            </div>
+            <button routerLink="/products" type="button" class="text-gray-900 bg-white border-2 border-gray-900 focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition font-semibold rounded-full text-sm px-7 py-2 mt-5 mx-auto block cursor-pointer">Return to shop</button>
+          </div>
+
+      }
+  
+    </div>
+  </section>
+}

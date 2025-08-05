@@ -1,0 +1,76 @@
+@if (categoriesList().length > 0) {
+
+    <app-header backgroundImage="/images/category.jpg" >
+        <p class="text-2xl">All categories</p>
+        <!-- <p>Online fashion, furniture, handmade... store</p> -->
+    </app-header>
+
+    <section id="category" class=" lg:xl-10/12 xl:w-9/12 mx-auto py-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                @for (category of categoriesList(); track category._id) {
+    
+                    <div class="card rounded-md shadow-lg p-1">
+                       
+                        <div class="relative group overflow-hidden me-3 cursor-pointer border border-black/30">
+                            <img [src]="category.image" class="w-full h-[350px] object-cover transition-transform duration-500 " />
+
+                            <div class="absolute inset-0 bg-gray-400 bg-opacity-50 opacity-0 group-hover:opacity-35 transition-opacity duration-300 z-10"></div>
+                            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-1/2 transition-all duration-500 z-20">
+                                <a href="javascript:void(0)" (click)="scrollToCategory(category._id); getAllSubCategories(category._id)" class="bg-white text-black text-sm px-4 py-1.5 rounded-full shadow hover:bg-black hover:text-white transition cursor-pointer">
+                                    subcategories
+                                </a>
+                                <a [routerLink]="['/search-products' , category._id]" class="bg-white text-black text-sm px-4 py-1.5 rounded-full shadow hover:bg-black hover:text-white transition cursor-pointer text-center">
+                                    His Products
+                                </a>
+                            </div>                        
+                        </div>
+                                
+                        <!-- category info -->
+                        <div class="p-3">
+                            <h3 class="text-xl font-medium text-[#686767] text-center">{{category.name}}</h3>
+                        </div>
+                    </div>
+                }
+            </div>            
+        </div>
+    </section>
+    
+
+    @if (categoryId2()) {
+
+        <!-- subCategories -->
+        <section [id]="categoryId2()" class=" lg:xl-10/12 xl:w-9/12 mx-auto py-10">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-center my-8">
+                    <div class="flex-grow border-t border-black"></div>
+                        <span class="px-4 text-black text-lg md:text-xl font-semibold uppercase whitespace-nowrap">
+                            {{categoryName()}} subcategories
+                        </span>
+                    <div class="flex-grow border-t border-black"></div>
+                </div>
+    
+    
+                @if(subCategoriesList().length > 0){
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        @for (subCategory of subCategoriesList(); track subCategory._id) {
+        
+                            <div class="card rounded-md shadow-lg p-3  border border-gray-300">
+                                <h3 class="text-xl font-medium text-[#686767] text-center">{{subCategory.name}}</h3>
+                            </div>
+                        }
+                    </div>            
+                }@else if(subCategoriesList() && subCategoriesList().length === 0) {
+                    <div class="px-12 py-8 text-md text-center text-[#31708f] bg-[#d9edf7]" role="alert">
+                        <span class="font-medium">No subcategories found for this categoryy.</span>
+                    </div>
+                    <button (click)="scrollToTop()" type="button" class="text-gray-900 bg-white border-2 border-gray-900 focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition font-semibold rounded-full text-sm px-7 py-2 mt-5 mx-auto block cursor-pointer">Return to categories</button>
+                }
+            </div>
+        </section>
+    }
+
+
+
+
+}

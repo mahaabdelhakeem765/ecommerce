@@ -1,0 +1,107 @@
+@if(productsList().length > 0){
+    <app-header backgroundImage="/images/shop-category.jpg" >
+        <p>Shop All Productss</p>
+        <p>Online fashion, furniture, handmade... store</p>
+    </app-header>
+
+
+
+    <section class=" lg:xl-10/12 xl:w-9/12 mx-auto py-10">
+        <div class="container mx-auto px-4">
+            <div  class="flex flex-col lg:flex-row lg:items-baseline lg:justify-between gap-3 mb-6 w-full">
+
+                <div class="relative lg:w-1/3">
+                    <div class="absolute inset-y-0 left-0 bottom-1 flex items-center ps-3 pointer-events-none">
+                        <i class="fa-solid fa-magnifying-glass size-5 text-gray-500"></i>
+                    </div>
+                    <input [(ngModel)]="searchItems" type="text" placeholder="Search..." class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-gray-400 focus:border-gray-400 block w-full ps-8 p-2 mb-3 ">
+                </div>
+
+                <div class="hidden lg:flex gap-2 items-center">
+                @for (cols of [3 ,4 ,5]; track $index) {
+
+                    <button (click)="gridCols = cols"
+                        class="px-1 h-8 border border-gray-400 flex items-center justify-center cursor-pointer group"
+                        [title]="cols + ' columns'">
+                        @switch (cols) {
+                            @case(3){
+                                <div class="grid grid-cols-3 gap-[2px] w-6 h-5">
+                                    @for(i of [1,2,3]; track $index){
+    
+                                        <span [class.bg-gray-800]="gridCols === cols" class="bg-gray-500 group-hover:bg-gray-800 transition duration-300 h-full w-full"></span>
+                                    }
+                                </div>
+                            }
+                            @case(4){
+                                <div  class="grid grid-cols-4 gap-[2px] w-8 h-5">
+                                    @for (i of [1,2,3,4]; track $index) {
+    
+                                        <span [class.bg-gray-800]="gridCols === cols" class="bg-gray-500 group-hover:bg-gray-800 transition duration-300 h-full w-full" ></span>
+                                    }
+                                </div>
+                            }
+                            @case(5){
+                                <div class="grid grid-cols-5 gap-[2px] w-10 h-5">
+                                    @for (i of [1,2,3,4,5]; track $index) {
+                                        <span [class.bg-gray-800]="gridCols === cols" class="bg-gray-500 group-hover:bg-gray-800 transition duration-300 h-full w-full"></span>
+                                    }
+                                </div>
+                            }
+                        }
+                        
+                    </button>
+        
+                }
+                </div>
+                <select [(ngModel)]="sortOption"  (change)="onSortChange(sortOption())"  name="" id="" class="rounded-full border border-gray-300 focus:outline-none focus:border-gray-500">
+                    <option value="price">Low to High</option>
+                    <option value="-price">High to Low</option>
+                </select>
+            </div>
+
+            @if((productsList() | search : searchItems()).length > 0){
+                <div class="parent grid gap-5"
+                    [class]="{
+                    'sm:grid-cols-2': true,
+                    'md:grid-cols-3': gridCols === 5 || gridCols === 4 || gridCols === 3,
+                    'lg:grid-cols-4': gridCols === 4,
+                    'lg:grid-cols-5': gridCols === 5
+                    }">
+                @for (product of (productsList() | search : searchItems()); track product._id) {
+                    <app-card [myProduct]="product"></app-card>
+                }
+                </div>
+                <button (click)="loadMore()" [disabled]="isLoadingMore() || isEndOfProducts()" class="text-gray-900 bg-white border-2 border-gray-900 focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition duration-300 font-semibold rounded-full text-sm px-12 py-3 mt-5 block mx-auto cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" >
+                    <!-- {{ isLoadingMore() ? 'Loading...' : isEndOfProducts() ? 'No More Products' : 'Load More' }} -->
+                    @if (isLoadingMore()) {
+                        <i class="fa-solid fa-circle-notch fa-spin text-md"></i>
+                    } @else if (isEndOfProducts()) {
+                        No More Products
+                    } @else {
+                        Load More
+                    }
+                </button>
+            }@else {
+                <div class="text-center py-20">
+                    <i class="fas fa-search fa-4x text-gray-300 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-700">No products found</h3>
+                    <p class="text-gray-500 mt-2">
+                        @if (searchItems()) {
+                            We couldn't find any products matching "{{ searchItems() }}"
+                        } @else {
+                            No products available at the moment
+                        }
+                    </p>
+                    @if (searchItems()) {
+                        <button 
+                            (click)="searchItems.set('')"
+                            class="mt-4 px-4 py-2 bg-[#56cfe1] text-white rounded-full hover:bg-[#45b8d1] transition duration-300 cursor-pointer">
+                            Clear search
+                        </button>
+                    }
+                </div>
+            }
+            
+        </div>
+    </section>
+}

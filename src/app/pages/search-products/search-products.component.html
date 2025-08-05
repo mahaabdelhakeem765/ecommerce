@@ -1,0 +1,29 @@
+@if(productSearchList().length){
+    <app-header backgroundImage="/images/shop-category.jpg" >
+        <p class="text-2xl">{{title()}}</p> 
+    </app-header>
+
+
+
+    <section class=" lg:xl-10/12 xl:w-9/12 mx-auto py-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                @for (product of productSearchList(); track product._id) {
+                    <app-card [myProduct]="product"></app-card>
+                }
+            </div>
+
+        </div>
+    </section>
+}@else {
+    <section class="min-h-[50vh] flex items-center justify-center text-center px-4">
+        <div>
+            <img src="/images/empty_product.svg" alt="No Products" class="w-50 mx-auto mb-4 opacity-70">
+            <p class="text-gray-800 text-lg">No products found for this brand or category.</p>
+            <div class="flex flex-wrap justify-center mt-2">
+                <button routerLink="/categories" type="button" class="text-gray-900 bg-white border-2 border-gray-900 focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition-all duration-300 font-semibold rounded-full text-sm px-7 py-1.5 cursor-pointer me-2">go to Categories</button>
+                <button routerLink="/brands" type="button" class="text-gray-900 bg-white border-2 border-gray-900 focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition-all duration-300 font-semibold rounded-full text-sm px-7 py-1.5 cursor-pointer">go to Brands</button>
+            </div>
+        </div>
+    </section>
+}

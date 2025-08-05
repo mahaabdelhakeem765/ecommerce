@@ -1,0 +1,69 @@
+<app-header backgroundImage="/images/cart.jpg" >
+    <p class="text-2xl uppercase">My Account</p>
+</app-header>
+<section class=" w-11/12 md:w-2/3 xl:w-1/2 mx-auto px-4 py-8 min-h-96">
+    <div class="flex items-center justify-center my-5">
+        <div class="flex-grow border-t border-black"></div>
+            <h2 class="px-4 text-black text-lg md:text-2xl font-semibold uppercase whitespace-nowrap">
+                Register Now
+            </h2>
+        <div class="flex-grow border-t border-black"></div>
+    </div>
+    <form action="" [formGroup]="registerForm" (ngSubmit)="submitForm()">
+        <div class="mb-6">
+            @let nameControl = registerForm.get('name');
+            <label for="uName" class="block mb-1 text-md font-normal text-[#686767]">Name :</label>
+            <input formControlName="name" type="text" id="uName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-gray-400 focus:ring-0 focus:border-gray-900 block w-full p-2.5">
+            <app-error-msg [controls]="nameControl"></app-error-msg>
+        </div>
+        <div class="mb-6">
+            @let emailControl = registerForm.get('email');
+            <label for="uEmail" class="block mb-2 text-md font-normal text-[#686767]">Email :</label>
+            <input formControlName="email" type="email" id="uEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-gray-400 focus:ring-0 focus:border-gray-900 block w-full p-2.5">
+            <app-error-msg [controls]="emailControl"></app-error-msg>
+        </div>
+        <div class="mb-6">
+            @let passwordControl = registerForm.get('password');
+            <label for="uPassword" class="block mb-2 text-md font-normal text-[#686767]">Password :</label>
+            <input formControlName="password" type="password" id="uPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-gray-400 focus:ring-0 focus:border-gray-900 block w-full p-2.5">
+            <app-error-msg [controls]="passwordControl" patrrenName="password"></app-error-msg>
+        </div>
+        <div class="mb-6">
+            <label for="uRePassword" class="block mb-2 text-md font-normal text-[#686767]">rePassword :</label>
+            <input formControlName="rePassword" type="password" id="uRePassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-gray-400 focus:ring-0 focus:border-gray-900 block w-full p-2.5">
+            @if (registerForm.getError('mismatch') && registerForm.get('rePassword')?.touched) {
+                <div class="flex mb-2 text-sm text-[#a94442]" role="alert">
+                    <div>
+                        <ul class="mt-1 list-none list-inside">
+                            @if(registerForm.get('rePassword')?.getError('required')){
+                                <li>rePassword is required</li>
+                            }
+                            <li>Password and rePassword doesn't match</li>
+                        </ul>
+                    </div>
+                </div>
+            } 
+        </div>
+        <div class="mb-6">
+            @let phoneControl = registerForm.get('phone');
+            <label for="uPhone" class="block mb-2 text-md font-normal text-[#686767]">Phone :</label>
+            <input formControlName="phone" type="tel" id="uPhone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-gray-400 focus:ring-0 focus:border-gray-900 block w-full p-2.5">
+            <app-error-msg [controls]="phoneControl" patrrenName="phone"></app-error-msg>
+        </div>
+
+        @if(errorMsg){
+            <p class=" p-4 mb-4 text-sm text-[#a94442] rounded-lg bg-red-100 border border-red-200 mt-1 text-center" role="alert">{{errorMsg}}</p>
+        }
+        @if(successMsg){
+            <p class=" p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 border border-green-200 mt-1 text-center" role="alert">{{successMsg}}</p>
+        }
+        <button [disabled]=" isLoading" class="text-gray-900 bg-white border-2 border-gray-900 focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition font-semibold rounded-full text-sm px-7 py-1.5 block ms-auto cursor-pointer disabled:cursor-not-allowed disabled:opacity-50">
+            Submit
+            @if(isLoading){
+
+                <i class="fa-solid fa-spinner fa-spin"></i>
+            }
+        </button>
+    </form>
+
+</section>

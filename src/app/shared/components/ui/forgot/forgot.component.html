@@ -1,0 +1,95 @@
+
+<app-header backgroundImage="/images/cart.jpg" >
+    <p class="text-2xl uppercase">My Account</p>
+    <!-- <p>Online fashion, furniture, handmade... store</p> -->
+</app-header>
+<section class=" w-11/12 md:w-2/3 xl:w-1/2 mx-auto px-4 py-8 min-h-[45vh]">
+    <!-- <h1 class="text-green-600 text-center text-3xl font-bold">Reset Password :</h1> -->
+    <div class="flex items-center justify-center my-5">
+        <div class="flex-grow border-t border-black"></div>
+            <h2 class="px-4 text-black text-lg md:text-2xl font-semibold uppercase whitespace-nowrap">
+                Reset Password
+            </h2>
+        <div class="flex-grow border-t border-black"></div>
+    </div>
+    @if(step == 1){
+        <form [formGroup]="forgotPasswordForm" (ngSubmit)="forgetPass()">
+        <div class="mb-6">
+            @let emailControl = forgotPasswordForm.get('email');
+            <label for="uEmail" class="block mb-2 text-md font-normal text-[#686767]">Email :</label>
+            <input formControlName="email" type="email" id="uEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-gray-400 focus:ring-0 focus:border-gray-900 block w-full p-2.5">
+            <app-error-msg [controls]="emailControl"></app-error-msg>
+        </div>
+
+        @if(forgetSuccessMsg){
+            <p class=" p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 border border-green-200 text-center" role="alert">{{forgetSuccessMsg}}</p>
+        }
+
+        @if(forgetErrorMsg){
+            <p class=" p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 border border-red-200 text-center" role="alert">{{forgetErrorMsg}}</p>
+        }
+       
+        <button [disabled]=" isLoading" class="text-gray-900 bg-white border-2 border-gray-900 focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition font-semibold rounded-full text-sm px-7 py-1.5 block mx-auto cursor-pointer disabled:cursor-not-allowed disabled:opacity-50">
+            Send Email
+            @if(isLoading){
+
+                <i class="fa-solid fa-spinner fa-spin"></i>
+            }
+        </button>
+    </form>
+    }
+    @if (step == 2) {
+        <form [formGroup]="verifyResetCodeForm" (ngSubmit)="verfiyCode()">
+        <div class="mb-6">
+            @let resetCodeControl = verifyResetCodeForm.get('resetCode');
+            <label for="uCode" class="block mb-2 text-md font-normal text-[#686767]">Reset Code :</label>
+            <input formControlName="resetCode" type="text" id="uCode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-gray-400 focus:ring-0 focus:border-gray-900 block w-full p-2.5">
+            <app-error-msg [controls]="resetCodeControl"></app-error-msg>
+        </div>
+
+        
+       @if(resetCodeSuccessMsg){
+            <p class=" p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 border border-green-200 text-center" role="alert">{{resetCodeSuccessMsg}}</p>
+        }
+
+        @if(resetCodeErrorMsg){
+            <p class=" p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 border border-red-200 text-center" role="alert">{{resetCodeErrorMsg}}</p>
+        }
+        
+         <button [disabled]=" isLoading" class="text-gray-900 bg-white border-2 border-gray-900 focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition font-semibold rounded-full text-sm px-7 py-1.5 block mx-auto cursor-pointer disabled:cursor-not-allowed disabled:opacity-50">
+            Verify Code
+            @if(isLoading){
+
+                <i class="fa-solid fa-spinner fa-spin"></i>
+            }
+        </button>
+    </form>
+    }
+    @if (step == 3) {
+        <form [formGroup]="resetPasswordForm" (ngSubmit)="resetPass()">
+            <div class="mb-6">
+                <label for="confirmEmail" class="block mb-2 text-md font-normal text-[#686767]">Email :</label>
+                <input formControlName="email" readonly type="email" id="confirmEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-gray-400 focus:ring-0 focus:border-gray-900 block w-full p-2.5">
+            </div>
+            <div class="mb-6">
+                @let newPasswordControl = resetPasswordForm.get('newPassword');
+                <label for="confirmPassword" class="block mb-2 text-md font-normal text-[#686767]">Password :</label>
+                <input formControlName="newPassword"  type="password" id="confirmPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-gray-400 focus:ring-0 focus:border-gray-900 block w-full p-2.5">
+                <app-error-msg [controls]="newPasswordControl" patrrenName="password"></app-error-msg>
+            </div>
+
+            @if(resetPasswordMsg){
+                <p class=" p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 border border-green-200 text-center" role="alert">{{resetPasswordMsg}}</p>
+            }
+            
+             <button [disabled]=" isLoading" class="text-gray-900 bg-white border-2 border-gray-900 focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition font-semibold rounded-full text-sm px-7 py-1.5 block mx-auto cursor-pointer disabled:cursor-not-allowed disabled:opacity-50">
+                Reset Password
+                @if(isLoading){
+
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                }
+            </button>
+        </form>
+    }
+
+</section> 

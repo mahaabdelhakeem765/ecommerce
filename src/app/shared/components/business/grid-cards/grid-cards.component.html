@@ -1,0 +1,20 @@
+<!-- <div class="parent grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+
+    @for (product of myProducts(); track product._id) {
+        <app-card [myProduct]="product"></app-card>
+    }
+</div> -->
+
+<!-- <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  <ng-content></ng-content>
+</div> -->
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  @if (myProducts()) {
+    @for (product of myProducts()!; track product._id) {
+      <app-card [myProduct]="product"></app-card>
+    }
+  } @else {
+    <ng-content></ng-content>
+  }
+</div>

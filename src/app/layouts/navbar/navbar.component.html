@@ -1,0 +1,67 @@
+<nav class="bg-gray-100 shadow-md border-gray-200 fixed left-0 right-0 top-0 z-[999] ">
+  <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <a routerLink="/home" class="flex items-center space-x-3 rtl:space-x-reverse me-2">
+      <img src="/images/simple-minimalist.avif" width="40px" class="rounded-full" alt="">
+      <span class="text-2xl font-medium">FreshCart</span>
+    </a>
+    <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+    </button>
+    <div class="hidden w-full md:flex flex-grow md:w-auto" id="navbar-default">
+      <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row items-center md:space-x-4 rtl:space-x-reverse md:mt-0 md:border-0 capitalize md:justify-center flex-grow">
+        @if (isLoggedIn()) {
+          <li>
+          <!-- <a routerLink="home" routerLinkActive="font-medium text-gray-800"  class="block py-2 px-3 text-gray-500 font-normal hover:text-gray-800 transition duration-300 rounded-sm  md:p-0" aria-current="page" >Home</a> -->
+           <a routerLink="home" routerLinkActive="active-link" class="block py-2 px-3 text-gray-500 font-normal hover:text-gray-800 transition duration-300 rounded-sm md:p-0 text-center"> Home </a>
+          </li>
+          <li>
+            <a routerLink="products" routerLinkActive="active-link" class="block py-2 px-3 text-gray-500 font-normal hover:text-gray-800 transition duration-300 rounded-sm  md:p-0 text-center">products</a>
+          </li>
+          <li>
+            <a routerLink="categories" routerLinkActive="active-link" class="block py-2 px-3 text-gray-500 font-normal hover:text-gray-800 transition duration-300 rounded-sm  md:p-0 text-center">categories</a>
+          </li>
+          <li>
+            <a routerLink="brands" routerLinkActive="active-link" class="block py-2 px-3 text-gray-500 font-normal hover:text-gray-800 transition duration-300 rounded-sm  md:p-0 text-center">brands</a>
+          </li>
+        }
+      </ul>
+      <ul class="font-medium ms-auto flex flex-col items-center p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-4 rtl:space-x-reverse md:mt-0 md:border-0 capitalize">
+        <li>
+          <a href="https://www.facebook.com/" target="_blank" class="block py-2 px-3 text-gray-800 hover:text-black transition duration-300 rounded-sm md:p-0"><i class="fab fa-facebook"></i></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/" target="_blank" class="block py-2 px-3 text-gray-800 hover:text-black transition duration-300 rounded-sm md:p-0"><i class="fab fa-instagram"></i></a>
+        </li>
+        @if (isLoggedIn()) {
+          <li>
+            <a routerLink="/cart" routerLinkActive="text-black text-xl" class="block py-2 px-3 font-normal text-gray-800 hover:text-black transition duration-300 rounded-sm  md:p-0 capitalize cursor-pointer relative">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span class="bg-gray-400/75 text-gray-800 text-xs font-medium me-2 px-1 py-0.5 rounded-sm absolute -top-1 -right-5">{{numOfCartItems()}}</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/wishlist" routerLinkActive="text-sky-500/50 text-xl" class="block py-2 px-3 font-normal text-gray-800 hover:text-black transition duration-300 rounded-sm  md:p-0 capitalize cursor-pointer relative">
+              <i class="fa-regular fa-heart"></i>
+              <span class="bg-gray-400/75 text-gray-800 text-xs font-medium me-2 px-1 py-0.5 rounded-sm absolute -top-1 -right-5">{{wishlistLength()}}</span>
+            </a>
+          </li>
+          <li>
+            <a class="block py-2 px-3 text-gray-500 font-normal hover:text-gray-800 transition duration-300 rounded-sm  md:p-0 capitalize cursor-pointer" (click)="logOut()">signOut</a>
+          </li>
+        }
+        @else {
+          <li>
+            <a routerLink="login" routerLinkActive="active-link" class="block py-2 px-3 text-gray-500 font-normal hover:text-gray-800 transition duration-300 rounded-sm  md:p-0 capitalize">login</a>
+          </li>
+          <li>
+            <a routerLink="register" routerLinkActive="active-link" class="block py-2 px-3 text-gray-500 font-normal hover:text-gray-800 transition duration-300 rounded-sm  md:p-0 capitalize">register</a>
+          </li>
+        }
+        
+      </ul>
+    </div>
+  </div>
+</nav>

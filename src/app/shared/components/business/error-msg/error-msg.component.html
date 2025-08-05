@@ -1,0 +1,24 @@
+@if (controls?.errors && controls?.touched) {
+    <div class="flex mb-2 text-sm text-[#a94442]" role="alert">
+        <ul class="mt-1 list-none list-inside">
+            @if(controls?.getError('required')){
+                <li>input is required</li>
+            }
+            @if(controls?.getError('minlength')){
+                <li>Must be greater than 3 characters</li>
+            }
+            @if(controls?.getError('maxlength')){
+                <li>Must be less than 30 characters</li>
+            }
+            @if(controls?.getError('email')){
+                <li>Invaild email must be contain &#64;</li>
+            }
+            @if(controls?.getError('pattern') && patrrenName === 'password'){
+                <li>Invalid password: must start with a capital letter and be at least 7 characters long (min 8 total)</li>
+            }
+            @if(controls?.getError('pattern') && patrrenName === 'phone'){
+                <li>Only Egyption phone numbers accepted</li>
+            }
+        </ul>
+    </div>
+}

@@ -1,0 +1,119 @@
+@if (productData()) {
+  <section class="py-10 px-6 lg:px-16 bg-white">
+      <div class="container mx-auto md:px-10 px-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              
+              <!-- Left: Images -->
+              <div  class="flex flex-col lg:flex-row gap-4">
+                  <!-- Thumbnails -->
+                   @if (productData()?.images?.length) {
+                        <div class="flex lg:flex-col gap-3 order-1 lg:order-0 overflow-x-auto lg:overflow-y-auto lg:max-h-[500px] pb-2 lg:pb-0">
+                            @for (img of productData()!.images; track $index) {
+                            <img
+                                [src]="img"
+                                class="w-20 h-24 flex-shrink-0 object-cover cursor-pointer border-1 transition"
+                                [class.border-gray-800]="selectedImage === img"
+                                [class.border-transparent]="selectedImage !== img"
+                                (click)="selectedImage = img"
+                            />
+                            }
+                        </div>
+                    }
+                  <!-- Main Image -->
+                  <div class="relative flex-1">
+                      <img [src]="selectedImage" class="w-full h-[500px] object-cover rounded-md" />
+                      
+                      <!-- Left arrow -->
+                      <button class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-transparent size-9 rounded-full border-1 shadow cursor-pointer hover:bg-[#222] hover:text-white transition" (click)="prevImage()">
+                      <i class="fas fa-chevron-left"></i>
+                      </button>
+  
+                      <!-- Right arrow -->
+                      <button class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-transparent size-9 rounded-full border-1 shadow cursor-pointer hover:bg-[#222] hover:text-white transition" (click)="nextImage()">
+                      <i class="fas fa-chevron-right"></i>
+                      </button>
+                  </div>
+              
+              </div>
+  
+              <!-- Right: Product Info -->
+              <div>
+                  <h2 class="text-2xl font-semibold mb-2"> {{productData()?.title}} </h2>
+                  <!-- € , EGP -->
+                  <p class="text-gray-500 text-lg mb-4"> {{productData()?.price | currency:'EGP'}}</p>
+                  <p class="text-gray-600 mb-6"> {{productData()?.description}} </p>
+  
+                  <div class="text-sm text-gray-500 space-y-1 mb-4">
+                      <p>category: {{productData()?.category?.name}} </p>
+                      <div>Rating: 
+                          <i class="fas fa-star text-yellow-300"></i>
+                          <span class="text-gray-500"> {{productData()?.ratingsAverage}} </span> 
+                      </div>
+                  </div>
+                  
+                  <!-- Quantity + Add to Cart -->
+                  <div class="flex items-center gap-4 mb-4">
+                      <!-- <div class="flex items-center border rounded-lg overflow-hidden">
+                        <button class="px-3 py-2" (click)="decrease()">-</button>
+                            <span class="px-4">{{ quantity }}</span>
+                        <button class="px-3 py-2" (click)="increase()">+</button>
+                      </div> -->
+                      <button (click)="addToWishlist()" [style.cursor]="loadingWishlist() ? 'wait' : 'pointer'" [disabled]="loadingWishlist()" class="w-10 h-10 border rounded-full flex items-center justify-center text-sx cursor-pointer hover:text-[#56cfe1] hover:border-[#56cfe1] transition-all duration-300"><i class="far fa-heart"></i></button>
+                      <button (click)="addToCart()" [style.cursor]="loadingCart() ? 'wait' : 'pointer' " [disabled]="loadingCart()" class="bg-[#222] text-white px-4 py-2 rounded-full hover:bg-[#56cfe1] transition duration-300 cursor-pointer">ADD TO CART</button>
+                  </div>
+  
+                  
+                  
+  
+                  <!-- Social -->
+                  <div class="flex gap-4 text-xl mt-4 text-gray-600">
+                      <i class="fab fa-facebook cursor-pointer"></i>
+                      <i class="fab fa-twitter cursor-pointer"></i>
+                      <i class="fab fa-pinterest cursor-pointer"></i>
+                      <i class="fab fa-tumblr cursor-pointer"></i>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+    
+
+  <section class="py-10 px-6 lg:px-16 bg-white">
+      <div class="container mx-auto md:px-10">
+          @if (relatedProducts().length) {
+            <!-- <h2 class="relative text-center text-3xl font-bold before:content-[''] after:content-[''] before:absolute after:absolute before:top-1/2 after:top-1/2 before:left-0 after:right-0 before:w-11 after:w-11 sm:before:w-1/4 sm:after:w-1/4 md:before:w-2/7 md:after:w-2/7 lg:before:w-2/5 lg:after:w-2/5 before:border-t after:border-t before:border-black after:border-black before:translate-y-1/2 after:translate-y-1/2 mb-5">
+                Related Products
+            </h2> -->
+            <div class="flex items-center justify-center my-5">
+                <div class="flex-grow border-t border-black"></div>
+                    <h2 class="px-4 text-black text-lg md:text-2xl font-semibold uppercase whitespace-nowrap">
+                        Related Products
+                    </h2>
+                <div class="flex-grow border-t border-black"></div>
+            </div>            
+            <owl-carousel-o [options]="customOptions">
+              @for (product of relatedProducts(); track product._id) {
+                <!-- <ng-template carouselSlide [id]="product._id">
+                  <app-card [myProduct]="product"></app-card>
+                </ng-template> -->
+                <ng-template carouselSlide [id]="product._id">
+                  <div class="h-full my-2">
+                    <app-card [myProduct]="product" class="h-full"></app-card>
+                  </div>
+                </ng-template>
+              }
+            </owl-carousel-o>
+          }
+      </div>
+  </section>
+
+}
+
+
+
+
+
+
+
+
+

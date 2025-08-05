@@ -1,0 +1,94 @@
+<app-header backgroundImage="/images/cart.jpg" >
+    <p class="text-2xl uppercase">cart</p>
+    <!-- <p>Online fashion, furniture, handmade... store</p> -->
+</app-header>
+<section id="cart" class=" lg:xl-10/12 xl:w-9/12 mx-auto min-h-[35vh] md:min-h-[45vh]">
+    <div class="container mx-auto py-12 px-6 md:px-12">
+
+        @if(cart().totalCartPrice){
+            <div class="relative overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 border border-[#ddd]">
+                    <thead class="text-ms text-gray-700 capitalize bg-gray-100 border-b border-[#ddd] ">
+                        <tr>
+                            <th scope="col" class="px-6 py-3"></th>
+                            <th scope="col" class="px-6 py-3">
+                                product
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                price
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                quantity
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                total
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                remove
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (prod of cart().products; track prod.product._id) {
+                            @let productCart = prod.product;
+                            <tr class="bg-white border-b border-gray-200">
+                                <td class="px-6 py-4 w-[100px] min-w-[100px]">
+                                    <img [src]="productCart.imageCover" class="w-100" [alt]="productCart.title"/>
+                                </td>
+    
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <ul>
+                                        <li class="font-medium text-gray-900 mb-1">{{productCart.title.split(' ' , 3).join(' ')}}.....</li>
+                                        <li>{{productCart.category.name}}</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{prod.price}} EGP
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="border w-[80px] h-8 rounded-full text-black/75 border-black/75 flex justify-between items-center px-2 font-bold trxt-lg">
+                                        <a (click)="updateQuantityProduct(productCart._id, getLocalProductCount(productCart._id) - 1)" [class.opacity-30]="getLocalProductCount(productCart._id) <= 1" class="font-bold"><i class="fa-solid fa-minus cursor-pointer hover:text-[#56cfe1] transition-[0.5s]"></i></a>
+                                        <span>{{prod.count}}</span>
+                                        <a (click)="updateQuantityProduct(productCart._id, getLocalProductCount(productCart._id) + 1)"  class="font-bold"><i class="fa-solid fa-plus cursor-pointer hover:text-[#56cfe1] transition-[0.5s]"></i></a>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ prod.price * prod.count }} EGP
+                                </td>
+                                <td class="px-6 py-4">
+                                    <a (click)="removeItem(productCart._id)" [style]="{ cursor: deletingProductId() === productCart._id ? 'wait' : 'pointer' }">
+                                        <i (click)="removeItem(productCart._id)" class="fa-solid fa-xmark text-black/75 text-xl text-center relative start-3 hover:text-[#56cfe1] transition-[0.5s]"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        <tr class="bg-white border-b border-gray-200">
+                            <td colspan="6">
+                                <div class="flex justify-between items-center m-2">
+                                    <div class="flex flex-col justify-center gap-2">
+                                        <h3 class="font-bold text-gray-900">Total cart price: <span class="font-normal text-gray-600"> {{totalCartPrice()}} EGP</span> </h3>
+                                        <button [routerLink]="['/checkout', cart()._id]"  class="text-white bg-[#222] border-2 border-[#222] focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition duration-300 font-semibold rounded-full text-sm px-7 py-1.5 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Payment</button>
+                                    </div>
+                                    <div class="flex flex-col justify-center gap-2">
+                                        <h3 class="font-bold text-gray-900">Number of cart items: <span class="font-normal text-gray-600"> {{numOfCartItems()}}</span> </h3>
+                                        <button (click)="deleteCart()" class="text-gray-900 bg-white border-2 border-gray-900 focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition duration-300 font-semibold rounded-full text-sm px-7 py-1.5 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Clear cart</button>
+                                    </div>
+                                    <!-- <button (click)="deleteCart()" class="text-gray-900 bg-white border-2 border-gray-900 focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition font-semibold rounded-full text-sm px-7 py-1.5 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Clear cart</button> -->
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        }@else{
+            <!-- cart empty -->
+             <div class="flex flex-col justify-center min-h-[30vh] md:min-h-[35vh]">
+                <div class="px-12 py-8 text-md text-center text-[#31708f] bg-[#d9edf7]" role="alert">
+                    <span class="font-medium">Your cart is currently empty.</span>
+                </div>
+                 <button routerLink="/products" type="button" class="text-gray-900 bg-white border-2 border-gray-900 focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition font-semibold rounded-full text-sm px-7 py-2 mt-5 mx-auto block cursor-pointer">Return to shop</button>
+             </div>
+
+        }
+    </div>
+</section>

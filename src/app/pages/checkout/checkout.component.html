@@ -1,0 +1,93 @@
+<app-header backgroundImage="/images/shop-category.jpg">
+    <p class="text-xl font-medium uppercase">Checkout</p>
+</app-header>
+<section id="cart" class=" lg:xl-10/12 xl:w-9/12 mx-auto">
+
+    <div class="container mx-auto py-12 px-6 md:px-12">
+        <div class="flex items-center justify-center my-5">
+            <div class="flex-grow border-t border-black"></div>
+                <h2 class="px-4 text-black text-lg md:text-2xl font-semibold uppercase whitespace-nowrap">
+                    Pay Now
+                </h2>
+            <div class="flex-grow border-t border-black"></div>
+        </div>
+
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-7">
+            <div class="space-y-4 flex flex-col justify-start h-full">
+                <label class="block mb-2 text-md font-semibold text-[#333333]">Choose your payment method:</label>
+                <!-- Pay Cash -->
+                <label class="flex items-start p-4 border border-gray-300 rounded-md cursor-pointer bg-white shadow-xs transition-all duration-200" [class]="{
+                    'border-gray-800' : paymentMethod() === 'cash',
+                    'border-gray-300' : paymentMethod() !== 'cash'
+                }">
+                    <input type="checkbox" [checked]="paymentMethod() === 'cash'" (change)="togglePaymentMethod('cash')" class="w-4 h-4 text-gray-700 bg-gray-200 border-gray-300 rounded-sm focus:ring-gray-500 focus:ring-2 mt-1 me-2" />
+                    <div class="w-full">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-800">Pay Cash</span>
+                        </div>
+                    </div>
+                </label>
+
+                <!-- Pay Visa -->
+                <label class="flex items-start p-4 border border-gray-300 rounded-md cursor-pointer bg-white shadow-xs transition-all duration-200"  [class]="{
+                    'border-gray-800' : paymentMethod() === 'visa',
+                    'border-gray-300' : paymentMethod() !== 'visa'
+                }">
+                    <input type="checkbox" [checked]="paymentMethod() === 'visa'" (change)="togglePaymentMethod('visa')" class="w-4 h-4 text-gray-700 bg-gray-200 border-gray-300 rounded-sm focus:ring-gray-500 focus:ring-2 mt-1 me-2"/>
+                    <div class="w-full">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-800">Pay with Visa</span>
+                        </div>
+                    </div>
+                </label>
+
+            </div>
+
+            <form [formGroup]="paymentForm" (ngSubmit)="submitForm()" action="">
+                <div class="mb-6">
+                    @let detailsControl = paymentForm.get('details');
+                    <label for="details" class="block mb-2 text-md font-normal text-[#686767]"> Details :</label>
+                    <input formControlName="details" type="text" id="details" placeholder="Enter Your Details" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-gray-400 focus:ring-0 focus:border-gray-900 block w-full p-2.5">
+                    <app-error-msg [controls]="detailsControl"></app-error-msg>
+                </div>
+
+                <div class="mb-6">
+                    @let phoneControl = paymentForm.get('phone');
+                    <label for="uPhone" class="block mb-2 text-md font-normal text-[#686767]">Phone :</label>
+                    <input formControlName="phone" type="tel" id="uPhone" placeholder="Enter Your Phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-gray-400 focus:ring-0 focus:border-gray-900 block w-full p-2.5">
+                    <app-error-msg [controls]="phoneControl" patrrenName="phone"></app-error-msg>
+                </div>
+                <div class="mb-6">
+                    @let cityControl = paymentForm.get('city');
+                    <label for="citySelect" class="block mb-2 text-md font-normal text-[#686767]">City</label>
+                    <select #citySelect formControlName="city" class="w-full">
+                        @for (city of cities; track $index) {
+                        <option [value]="city">{{ city }}</option>
+                        }
+                    </select>
+                    <app-error-msg [controls]="cityControl"></app-error-msg>
+                </div>
+                <!-- class="text-white bg-[#222] border-2 border-[#222] focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition font-semibold rounded-full text-sm px-7 py-1.5 cursor-pointer block ms-auto disabled:opacity-50 disabled:cursor-not-allowed"> -->
+                @if(paymentMethod() === 'visa'){
+                <button (click)="submitForm()" [disabled]="isLoading()"
+                    class="text-white bg-[#222] border-2 border-[#222] focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition font-semibold rounded-full text-sm px-7 py-1.5 cursor-pointer block ms-auto disabled:opacity-50 disabled:cursor-not-allowed">
+                    Payment
+                    @if(isLoading()){
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    }
+                </button>
+                }
+                @if(paymentMethod() === 'cash') {
+                <button (click)="submitForm()" [disabled]="isLoading()"
+                    class="text-white bg-[#222] border-2 border-[#222] focus:outline-none hover:bg-[#56cfe1] hover:border-[#56cfe1] hover:text-white transition font-semibold rounded-full text-sm px-7 py-1.5 cursor-pointer block ms-auto disabled:opacity-50 disabled:cursor-not-allowed">
+                    Cash 
+                    @if(isLoading()){
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    }
+                </button>
+                }
+            </form>
+        </div>
+    </div>
+</section>

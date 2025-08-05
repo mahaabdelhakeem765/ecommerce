@@ -1,1 +1,65 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+body{
+   font-family: "PT Serif", serif;
+}
+
+/* styles.css or global styles */
+/* .nav-link {
+  @apply block py-2 px-3 text-gray-500 font-normal hover:text-gray-800 transition rounded-sm md:p-0;
+} */
+ 
+
+.active-link {
+  @apply font-medium text-gray-800;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  color: #222;
+}
+.scrollable-select {
+  max-height: 10rem; /* adjust as needed for ~5 items */
+  overflow-y: auto;
+}
+
+/* .label-style{
+  @apply block mb-2 text-md font-normal text-[#686767];
+}
+.input-style{
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-gray-400 focus:ring-0 focus:border-gray-900 block w-full p-2.5;
+} */
+
+
+.select2-container--default .select2-selection--single {
+  border-radius: 0;
+}
+.select2-container .select2-selection--single {
+  height: 38px;
+}
+:is([type=text], [type=email], [type=url], [type=password], [type=number], [type=date], [type=datetime-local], [type=month], [type=search], [type=tel], [type=time], [type=week], [multiple], textarea, select):focus {
+  --tw-ring-color: #222;
+}
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+  background-color: #222;
+}
+
+.custom-gray-toast {
+  background-color: #9ca3af !important;
+  color: white !important;
+}
+
+
+/* dots owl-carsoul */
+.owl-dots {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
