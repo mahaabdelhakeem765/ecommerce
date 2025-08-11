@@ -4,10 +4,11 @@ import { RouterModule } from '@angular/router';
 import { CartService } from '../../../../core/services/cart/cart.service';
 import { WishlistService } from '../../../../core/services/wishlist.service';
 import { ToastrService } from 'ngx-toastr';
+import { ProductQuickViewComponent } from '../product-quick-view/product-quick-view.component';
 
 @Component({
   selector: 'app-card',
-  imports: [RouterModule],
+  imports: [RouterModule , ProductQuickViewComponent],
   templateUrl: './card.component.html',
   styleUrl: './card.component.css'
 })

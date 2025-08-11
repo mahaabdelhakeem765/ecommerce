@@ -15,7 +15,8 @@
 
 
         <div class="absolute top-1/4 left-1/2 -translate-x-1/2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-1/2 transition-all duration-500 z-20">
-            <a routerLink="/products" class="bg-white text-black text-sm px-4 py-1.5 rounded-full shadow hover:bg-black hover:text-white transition cursor-pointer">
+            <!-- here i want when click open modal contain details (product) -->
+            <a  (click)="quickViewRef.openModal()" class="bg-white text-black text-sm px-4 py-1.5 rounded-full shadow hover:bg-black hover:text-white transition cursor-pointer">
                 Quick Shop
             </a>
             <button (click)="addProductToCart(myProduct()._id)" [style.cursor]="loadingCart() ? 'wait' : 'pointer' " [disabled]="loadingCart()" class="bg-white text-black text-sm px-4 py-1.5 rounded-full shadow hover:bg-black hover:text-white transition cursor-pointer">
@@ -36,4 +37,17 @@
             </div>
         </div>
     </div>
+    <app-product-quick-view 
+    #quickViewRef 
+    [productId]="myProduct()._id">
+</app-product-quick-view>
 </div>
+
+
+
+<!-- <app-product-quick-view 
+    #quickViewRef 
+    [productId]="myProduct()._id">
+</app-product-quick-view> -->
+
+<!-- <app-product-quick-view></app-product-quick-view> -->
