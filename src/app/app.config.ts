@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withHashLocation } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import {
   provideClientHydration,
@@ -15,7 +15,7 @@ import { loadingInterceptor } from './core/iterceptors/loading/loading.intercept
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes , withHashLocation()),
+    provideRouter(routes ),
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch() , withInterceptors([headersInterceptor , errorsInterceptor , loadingInterceptor])),
     provideAnimations(),
